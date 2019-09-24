@@ -1,0 +1,24 @@
+- hosts: kubernetes-master
+  tasks:
+
+   - name: Ansible copy file to remote server
+     copy:
+       src: ./containers/
+       dest: /home/centos
+   - name: Add Non-root user:centos to wheel group
+     shell: usermod -aG wheel centos     
+   - name: change user permission of Yaml files
+     shell: sudo chown -R centos:centos /home/centos/
+- hosts: kubernetes-master
+  become: yes
+  become_user: centos
+  tasks:
+  
+    - name: Create persistent volume for mysql-db
+      shell: kubectl apply -f mysql-pv.yaml
+    - name: Create a container for mysql database
+      shell: kubectl apply -f mysql-deployment.yaml
+    - name: Create a container of apache-webserver
+      shell: kubectl apply -f apache.yaml
+    - name: Expose httpd-webserver at 80
+      shell: kubectl apply -f apache-service.yaml
