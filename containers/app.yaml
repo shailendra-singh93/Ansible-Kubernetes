@@ -1,36 +1,36 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: hello-python-service
+  name: medhavi-app-service
 spec:
   selector:
-    app: hello-python
+    app: medhavi-app
   ports:
   - protocol: "TCP"
-    port: 6000
-    targetPort: 5000
+    port: 8001
+    targetPort: 8000
   type: LoadBalancer
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hello-python
+  name: medhavi-app
   labels:
-    app: hello-python
+    app: medhavi-app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: hello-python
+      app: medhavi-app
   template:
     metadata:
       labels:
-        app: hello-python
+        app: medhavi-app
     spec:
       containers:
-      - name: hello-python
-        image: hello-python:test
+      - name: medhavi-app
+        image: medhavi-app:v1
         imagePullPolicy: Never
         ports:
-        - containerPort: 5000
+        - containerPort: 8000
