@@ -27,6 +27,18 @@
        name: docker
        state: started
 
+   - name: Ensure group "docker" exists
+     group:
+       name: docker
+       state: present
+       
+   - name: Adding user centos to group docker
+     user: 
+        name: centos
+        shell: /bin/bash
+        groups: docker,wheel
+        append: yes
+
    - name: ensure net.bridge.bridge-nf-call-ip6tables is set to 1
      sysctl:
       name: net.bridge.bridge-nf-call-ip6tables
