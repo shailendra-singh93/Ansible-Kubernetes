@@ -1,0 +1,36 @@
+create 2 VMs[kubernetes-master & kubernetes-worker ] with Minimal setup ( configure two users ( root & centos ) with 4GB ram and 100GB HDD)
+update packages [ yum update -y ]
+Edit host file and add the entry for both the nodes.
+ssh-keygen , ssh-copy-id [ all 4 user]
+disable selinux [ vi /etc/selinux/config  , selinux=disabled ]
+install git & ansible in master VM [yum install git ansible -y]
+git clone https://github.com/shailendra-singh93/Ansible-Kubernetes-Mysql.git
+now go to the Ansible-project and add master node and worker node IP details in hosts file
+and execute below command:	
+		$ ansible-playbook -i hosts kube-dependencies.yml
+		$ ansible-playbook -i hosts master.yml
+		$ ansible-playbook -i hosts workers.yml
+
+ISSUE OBSERVED:
+1.  FAILED! => {"changed": false, "msg": "Source /etc/kubernetes/admin.conf not found"} 
+Solved as RUN Manually: sudo kubeadm init --pod-network-cidr=10.244.0.0/16 >> install_log.txt
+check file in /etc/kubernetes/admin.conf
+
+2.  FAILED! => {"changed": false, "msg": "Failure talking to yum: Cannot find a valid baseurl for repo: base/7/x86_64"}
+Solution: Most often it happen due to package download issue and reboot of nodes can resolve it or install kubelet manually.
+
+3. 
+
+
+$ ssh centos@master_ip
+$ kubectl get nodes
+$ kubectl cluster-info
+$ kubectl get services
+$ kubectl create deployment nginx --image=nginx
+$ kubectl expose deploy nginx --port 80 --target-port 80 --type NodePort
+$ kubectl get services
+$ kubectl delete service nginx
+$ kubectl delete deployment nginx
+$ kubectl get deployments
+
+
