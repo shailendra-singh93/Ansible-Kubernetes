@@ -18,8 +18,8 @@ $ ssh-copy-id root@<master_node_IP>   [Execute this with all the master node's I
 $ ssh-copy-id root@<worker_node_IP>   [Execute this with all the worker node's IPs)
 
 After passwordless ssh is done clone the ansible script as below:
-Clone this repository : https://github.com/shailendra-singh93/Ansible-Kubernetes-Mysql.git
-$ git clone https://github.com/shailendra-singh93/Ansible-Kubernetes-Mysql.git
+Clone this repository as below:
+$ git clone https://github.com/shailendra-singh93/ansible-kubernetes.git
 
 Update Ansible hosts file and make entries for all the Master node in Master group & worker node in Worker group.
 $cd Ansible-Kubernetes
