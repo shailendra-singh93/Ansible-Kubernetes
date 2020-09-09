@@ -1,3 +1,4 @@
+---
 - hosts: all
   become: yes
   tasks:
@@ -27,17 +28,17 @@
        name: docker
        state: started
 
-   - name: Ensure group "docker" exists
-     group:
-       name: docker
-       state: present
+#   - name: Ensure group "docker" exists
+#     group:
+#       name: docker
+#       state: present
        
-   - name: Adding user centos to group docker
-     user: 
-        name: centos
-        shell: /bin/bash
-        groups: docker,wheel
-        append: yes
+#   - name: Adding non-admin user to group docker
+#     user: 
+#        name: roshan
+#        shell: /bin/bash
+#        groups: docker,wheel
+#        append: yes
 
    - name: ensure net.bridge.bridge-nf-call-ip6tables is set to 1
      sysctl:
@@ -76,7 +77,7 @@
        enabled: yes
        state: started
 
-- hosts: kubernetes-master
+- hosts: masters
   become: yes
   tasks:
    - name: install kubectl
@@ -99,8 +100,8 @@
        creates: cluster_initialized.txt
 
    - name: create .kube directory
-     become: yes
-     become_user: centos
+#     become: yes
+#     become_user: roshan
      file:
        path: $HOME/.kube
        state: directory
@@ -109,13 +110,13 @@
    - name: copy admin.conf to user's kube config
      copy:
        src: /etc/kubernetes/admin.conf
-       dest: /home/centos/.kube/config
+       dest: /home/root/.kube/config
        remote_src: yes
-       owner: centos
+       owner: root
 
    - name: install Pod network
-     become: yes
-     become_user: centos
+#     become: yes
+#     become_user: roshan
      shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/a70459be0084506e4ec919aa1c114638878db11b/Documentation/kube-flannel.yml >> pod_network_setup.txt
      args:
        chdir: $HOME

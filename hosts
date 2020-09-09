@@ -1,5 +1,5 @@
 [masters]
-kubernetes-master ansible_host=172.40.1.190 ansible_user=root
+centos-1 ansible_host=172.17.40.102 ansible_user=root
 
 [workers]
-kubernetes-worker ansible_host=172.40.1.191 ansible_user=root
+centos-2 ansible_host=172.17.40.107 ansible_user=root
