@@ -1,8 +1,8 @@
 - hosts: all
-
   vars:
    packages:
-   - docker*
+   - docker-ce*
+   - podman*
    - kubeadm
    - kubectl
    - kubelet
@@ -14,10 +14,9 @@
      state: absent
 
   - name: Uninstalling kubernetes related packages
-    yum:
-     name: "{{ item }}"
+    dnf:
+     name: "{{ packages }}"
      state: absent
-    with_items: "{{ packages }}"
 
   - name: Removing required files
     file:
