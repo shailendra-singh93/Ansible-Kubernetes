@@ -1,5 +1,5 @@
 [masters]
-centos-1 ansible_host=172.17.40.102 ansible_user=root
+k8s-master-sh1 ansible_host=192.168.133.232 ansible_user=root
 
 [workers]
-centos-2 ansible_host=172.17.40.107 ansible_user=root
+k8s-worker-sh1 ansible_host=192.168.133.132 ansible_user=root
